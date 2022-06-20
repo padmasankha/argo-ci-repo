@@ -21,12 +21,6 @@ COPY main $ARGO_HOME/main
 COPY app.py $ARGO_HOME
 COPY requirements.txt $ARGO_HOME
 
-RUN useradd dockeruser
-
 RUN pip install -r requirements.txt
-
-RUN chown -R dockeruser:dockeruser ${ARGO_HOME}
-
-USER dockeruser
 
 CMD ["gunicorn", "--workers" ,"10", "--max-requests", "3", "-b", "0.0.0.0:8000", "app:app", "--timeout", "10800"]
